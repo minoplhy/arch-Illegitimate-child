@@ -6,7 +6,7 @@ pkgname=(
   webkit2gtk
   webkit2gtk-docs
 )
-pkgver=2.42.0
+pkgver=2.42.1
 pkgrel=1
 pkgdesc="Web content engine for GTK"
 url="https://webkitgtk.org"
@@ -80,10 +80,10 @@ source=(
   $url/releases/webkitgtk-$pkgver.tar.xz{,.asc}
   webkitgtk-MiniBrowser-fullscreen.patch::https://github.com/WebKit/WebKit/commit/e07345343415dd2496edc721daa61a3b42703131.patch
 )
-sha256sums=('828f95935861fae583fb8f2ae58cf64c63c178ae2b7c2d6f73070813ad64ed1b'
+sha256sums=('6f41fac9989d3ee51c08c48de1d439cdeddecbc757e34b6180987d99b16d2499'
             'SKIP'
             'a921d6be1303e9f23474971f381886fd291ec5bb1a7ff1e85acede8cfb88bef2')
-b2sums=('afaaef8482fe81645eee55be86a80fb51eff83dc000ac0dc5981d41810b5c72c59428d8e92a02c04718c0367ac19689501c81764f9603b767d7271ad9cd66075'
+b2sums=('c6453cf2d15661507df66c5478e7675217b62d9579cf9b9408cb3e4fa1a8405c5c2608edf0960baed62aafa766e6cdbe2f0c07e8fb728d86c111f12d5a816492'
         'SKIP'
         'd440d82c769f1b35caf5464dc850cdf1c896224205c90c17d8b0a44aee62e4b1383e11306936aaca067fde8836770d346d5122d7b05c91a5c7c1741c89c65e2f')
 validpgpkeys=(
