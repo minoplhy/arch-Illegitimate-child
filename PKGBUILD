@@ -73,7 +73,7 @@
 pkgbase=ttf-ms-win11-auto
 pkgname=($pkgbase{,-japanese,-korean,-sea,-thai,-zh_cn,-zh_tw,-other})
 pkgver=10.0.22631.2428
-pkgrel=1
+pkgrel=2
 arch=(any)
 url='https://www.microsoft.com/typography/fonts/product.aspx?PID=164'
 license=(custom)
@@ -403,12 +403,14 @@ prepare() {
     echo -ne "- Mount filesystems as a non-privileged user: "
     touch test.mount
     _unprivilegedMountAllowed=false
-    _testLoopDev=$(udisksctl loop-setup -r -f test.mount --no-user-interaction | awk '{print $NF}') && _unprivilegedMountAllowed=true
-    _testLoopDev=${_testLoopDev::-1}
-    udisksctl loop-delete -b "$_testLoopDev" --no-user-interaction
+    _udisksctlOutput=$(udisksctl loop-setup -r -f test.mount --no-user-interaction) && {
+      _unprivilegedMountAllowed=true
+      _testLoopDev=$(echo "$_udisksctlOutput" | awk '{print $NF}' RS='.\n')
+      udisksctl loop-delete -b "$_testLoopDev" --no-user-interaction
+    }
     rm test.mount
 
-    if [ $_unprivilegedMountAllowed ]; then
+    if [ "$_unprivilegedMountAllowed" = "true" ]; then
       echo "allowed"
       echo "- Downloading fonts directly"
       mkdir -p mnt/http
