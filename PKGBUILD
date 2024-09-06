@@ -5,7 +5,7 @@
 
 _pkgname="spectacle"
 pkgname="$_pkgname-git"
-pkgver=24.02.1.r23.gb4c8502
+pkgver=24.08.0.r10.gc7de07d
 pkgrel=1
 pkgdesc='KDE screenshot capture utility'
 url='https://invent.kde.org/graphics/spectacle'
@@ -13,37 +13,16 @@ license=('GPL-2.0-or-later')
 arch=('x86_64')
 
 depends=(
+  'kcrash'
   'kpipewire'
+  'kstatusnotifieritem'
   'layer-shell-qt'
+  'opencv'
+  'prison'
   'purpose'
   'qt6-multimedia'
   'xcb-util-cursor'
   'zxing-cpp'
-
-  ## implicit
-  #hicolor-icon-theme
-  #kconfig
-  #kconfigwidgets
-  #kcoreaddons
-  #kdbusaddons
-  #kglobalaccel
-  #kguiaddons
-  #ki18n
-  #kio
-  #kirigami
-  #kjobwidgets
-  #knotifications
-  #kservice
-  #kwidgetsaddons
-  #kwindowsystem
-  #kxmlgui
-  #libxcb
-  #qt6-base
-  #qt6-declarative
-  #qt6-wayland
-  #wayland
-  #xcb-util
-  #xcb-util-image
 )
 makedepends=(
   'extra-cmake-modules'
@@ -57,12 +36,11 @@ provides=("$_pkgname=${pkgver%%.r*}")
 conflicts=("$_pkgname")
 
 _pkgsrc="$_pkgname"
-source=("git+https://invent.kde.org/graphics/spectacle.git")
+source=("$_pkgsrc"::"git+$url.git")
 sha256sums=('SKIP')
 
 pkgver() {
   cd "$_pkgsrc"
-
   local _regex='^\s+<release version="([0-9]+\.[0-9]+(\.[0-9]+)?)".*>$'
   local _file='desktop/org.kde.spectacle.appdata.xml'
 
@@ -95,4 +73,3 @@ build() {
 package() {
   DESTDIR="$pkgdir" cmake --install "build"
 }
-
