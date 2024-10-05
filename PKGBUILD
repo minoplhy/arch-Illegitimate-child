@@ -7,7 +7,7 @@ pkgname=(
   webkit2gtk-docs
 )
 pkgver=2.46.1
-pkgrel=2
+pkgrel=3
 pkgdesc="Web content engine for GTK"
 url="https://webkitgtk.org"
 arch=(x86_64)
@@ -66,7 +66,7 @@ depends=(
   libgcrypt
   libgl
   libgles
-  libjpeg
+  libjpeg-turbo
   libjxl
   libmanette
   libpng
