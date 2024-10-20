@@ -1,12 +1,13 @@
 pkgbase = ttf-ms-win11-auto
 	pkgver = 10.0.26100.1742
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.microsoft.com/typography/fonts/product.aspx?PID=164
 	arch = any
 	license = custom
 	makedepends = udisks2
 	makedepends = p7zip
 	makedepends = httpdirfs
+	makedepends = fuse2
 	provides = ttf-font
 	provides = ttf-ms-win11
 	conflicts = ttf-vista-fonts
