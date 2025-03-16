@@ -44,6 +44,7 @@ depends=(
   bubblewrap
   cairo
   enchant
+  expat
   fontconfig
   freetype2
   gcc-libs
