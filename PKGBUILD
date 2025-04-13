@@ -25,17 +25,19 @@ provides=('vscode' 'codium' 'vscodium')
 conflicts=('vscodium')
 install=$pkgname.install
 
-sha256sums=('6118f416e2ccf6bb26ccabcbe03744d6b81a65a3fadfbcea98fe4f7561556bf7'
-            'afd622fff74f86daa3767f5f0955bbdf0947d16bee3f6ff0bb12a56f0f97197e'
+sha256sums=('3a5bc109974fcf408855c13965f6d6be0997655c5b359de0bfd19a678c00844e'
+            '6eef345b65bf2679c928c763529540435ab9c6e1836917319810a7a2d484ae1b'
             '01ba3d33e76804e2346d08f4eda256a29610c9eb59432e4b016d05ad93d901ba'
-            '63b9f3e07dcfe92f59e851fdeeaed6ee986950672f75cc950489bce67e85d884')
+            '63b9f3e07dcfe92f59e851fdeeaed6ee986950672f75cc950489bce67e85d884'
+            '07f0314b1869e3666f1ba52cd02dd40c841beef11a1ab9ae3246cafd01ef6caa')
 sha256sums_x86_64=('f34b4b5b67f3660e43b2f409a0c1927f0b0be66cabbf5811abd6233cd262709c')
 sha256sums_aarch64=('bc371e1eee54889095ad2290f0281b10888aab3044cf5ebf06a3d22b2886c19b')
 
 source=('vscodium-bin.desktop'
         'vscodium-bin-url-handler.desktop'
         'vscodium-bin.install'
-        'vscodium-bin.sh')
+        'vscodium-bin.sh'
+        'vscodium-bin-wayland.desktop')
 source_x86_64=("https://github.com/VSCodium/vscodium/releases/download/${pkgver}/${_pkgname}-linux-x64-${pkgver}.tar.gz")
 source_aarch64=("https://github.com/VSCodium/vscodium/releases/download/${pkgver}/${_pkgname}-linux-arm64-${pkgver}.tar.gz")
 
