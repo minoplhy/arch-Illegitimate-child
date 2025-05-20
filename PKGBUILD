@@ -30,14 +30,14 @@
 #
 #  $ udisksctl unmount -b /dev/loopX
 #  $ udisksctl loop-delete -b /dev/loopX
-#  $ fusermount -uz src/mnt/http
+#  $ fusermount3 -uz src/mnt/http
 #
 # Replace /dev/loopX with the relevant loop device, which is reported during
 # package build. If it isn't reported then loop device creation is not yet
 # finished and it errored out due to timeout. It usually happens due to slow or
 # inconsistent network. In such a case, you can do one of the following:
 #  1. wait for the loop device to be created and run the above commands, or
-#  2. just run the above 'fusermount' command (doing this might leave redundant
+#  2. just run the above 'fusermount3' command (doing this might leave redundant
 #     loop devices which can be later removed with a simple system reboot);
 # and then try building the package again.
 #
@@ -73,13 +73,13 @@
 pkgbase=ttf-ms-win11-auto
 pkgname=($pkgbase{,-japanese,-korean,-sea,-thai,-zh_cn,-zh_tw,-other})
 pkgver=10.0.26100.1742
-pkgrel=3
+pkgrel=4
 arch=(any)
 url='https://www.microsoft.com/typography/fonts/product.aspx?PID=164'
 license=(custom)
 provides=(ttf-font ttf-ms-win11)
 conflicts=(ttf-vista-fonts)
-makedepends=(udisks2 p7zip httpdirfs fuse2 udftools)
+makedepends=(udisks2 p7zip httpdirfs fuse3 udftools)
 
 # URL of ISO file from which to extract the fonts.
 _iso="https://software-static.download.prss.microsoft.com/dbazure/888969d5-f34g-4e03-ac9d-1f9786c66749/26100.1742.240906-0331.ge_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
@@ -436,7 +436,7 @@ prepare() {
       echo "  - Deleting loop device: $_loopDev"
       udisksctl loop-delete -b "$_loopDev" --no-user-interaction
       echo "  - Unmounting HTTP file"
-      fusermount -uz mnt/http
+      fusermount3 -uz mnt/http
       rmdir -p mnt/http
     else
       echo "not allowed"
