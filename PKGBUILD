@@ -8,7 +8,7 @@ pkgver=143.0.4_1
 _fixedfirefoxver="${pkgver%_*}" # Version of Firefox this LibreWolf version is based on, but the Firefox patch number is always included
 _librewolfver="${pkgver#*_}"
 _firefoxver="${_fixedfirefoxver%.0}" # Removes ".0" from the end. For "136.0.0" this will result in "136.0" but for "136.0.1" won't do anything.
-pkgrel=1
+pkgrel=2
 pkgdesc="Community-maintained fork of Firefox, focused on privacy, security and freedom."
 arch=(x86_64 aarch64)
 license=(MPL-2.0)
@@ -22,7 +22,7 @@ depends=(
   nss
   ttf-font
   libpulse
-  ffmpeg
+  ffmpeg4.4
   hicolor-icon-theme
   libxdamage
   libxi
