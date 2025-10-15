@@ -1,14 +1,14 @@
-# Maintainer: lsf <lsf at pfho dot net>
+# Maintainer: ohfp/lsf <@ohfp:matrix.org>
 
 pkgname=librewolf-bin
 provides=(${pkgname//-bin/""})
 conflicts=(${pkgname//-bin/""})
 epoch=1
-pkgver=143.0.4_1
+pkgver=144.0.0_1
 _fixedfirefoxver="${pkgver%_*}" # Version of Firefox this LibreWolf version is based on, but the Firefox patch number is always included
 _librewolfver="${pkgver#*_}"
 _firefoxver="${_fixedfirefoxver%.0}" # Removes ".0" from the end. For "136.0.0" this will result in "136.0" but for "136.0.1" won't do anything.
-pkgrel=2
+pkgrel=1
 pkgdesc="Community-maintained fork of Firefox, focused on privacy, security and freedom."
 arch=(x86_64 aarch64)
 license=(MPL-2.0)
@@ -76,12 +76,12 @@ source=(
 )
 source_aarch64=("${_uploadpath_aarch64}" "${_uploadpath_sig_aarch64}")
 source_x86_64=("${_uploadpath_x86_64}" "${_uploadpath_sig_x86_64}")
-sha256sums=('abe50a8c33d0285df639201a467dfc0fea57f18400e8f27658c6836f06f0f00f'
+sha256sums=('ab0fed22aa200c93918141990e0f87dbfb7736c5e7a65bc622ac56bde1e226d7'
             '959c94c68cab8d5a8cff185ddf4dca92e84c18dccc6dc7c8fe11c78549cdc2f1'
             '7d01d317b7db7416783febc18ee1237ade2ec86c1567e2c2dd628a94cbf2f25d')
-sha256sums_x86_64=('d59c177c4d772bc5ff7e106cd226c568cec0fdb44335b5388691067592232119'
+sha256sums_x86_64=('581cfbc7af4eacd661e9c247e5e4e3b53d6e0078d0f664d928d46320cae39357'
                    'SKIP')
-sha256sums_aarch64=('202c4dffb82a165a87f75d034e8f9c6eb3350288a863625ba7653c01f3711948'
+sha256sums_aarch64=('8e577451159ac713fdd9956a16ddcfb4903d886c759c69cd485562d1eccf2f20'
                     'SKIP')
 
 package() {
