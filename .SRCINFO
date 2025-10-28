@@ -42,8 +42,9 @@ pkgbase = gtk2
 
 pkgname = gtk2
 	install = gtk2.install
+	optdepends = adwaita-fonts: Default font
 	optdepends = adwaita-icon-theme: Default icon theme
-	optdepends = gnome-themes-standard: Default widget theme
+	optdepends = gnome-themes-extra-gtk2: Default widget theme
 	optdepends = python: gtk-builder-convert
 	provides = libgailutil.so
 	provides = libgdk-x11-2.0.so
