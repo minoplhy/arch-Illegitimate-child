@@ -1,4 +1,0 @@
-[spectacle-git]
-source = "git"
-git = "https://invent.kde.org/graphics/spectacle.git"
-prefix = "v"
