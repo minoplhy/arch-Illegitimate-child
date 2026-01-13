@@ -4,7 +4,7 @@ pkgname=librewolf-bin
 provides=(${pkgname//-bin/""})
 conflicts=(${pkgname//-bin/""})
 epoch=1
-pkgver=146.0.1_1
+pkgver=147.0.0_1
 _fixedfirefoxver="${pkgver%_*}" # Version of Firefox this LibreWolf version is based on, but the Firefox patch number is always included
 _librewolfver="${pkgver#*_}"
 _firefoxver="${_fixedfirefoxver%.0}" # Removes ".0" from the end. For "136.0.0" this will result in "136.0" but for "136.0.1" won't do anything.
@@ -62,26 +62,26 @@ backup=('usr/lib/librewolf/librewolf.cfg'
 options=(!emptydirs)
 install='librewolf-bin.install'
 
-_project_id=44042130
-_base_url=https://gitlab.com/api/v4/projects/${_project_id}/packages/generic/${pkgname//-bin/""}/$_firefoxver-$_librewolfver
+
+_base_url=https://codeberg.org/api/packages/librewolf/generic/${pkgname//-bin/""}/$_firefoxver-$_librewolfver
 _uploadpath_aarch64=${_base_url}/${pkgname//-bin/""}-$_firefoxver-$_librewolfver-linux-arm64-package.tar.xz
 _uploadpath_x86_64=${_base_url}/${pkgname//-bin/""}-$_firefoxver-$_librewolfver-linux-x86_64-package.tar.xz
 _uploadpath_sig_aarch64=${_uploadpath_aarch64}.sig
 _uploadpath_sig_x86_64=${_uploadpath_x86_64}.sig
 _source_tag="$_firefoxver-$_librewolfver"
 source=(
-  "git+https://gitlab.com/${pkgname//-bin/""}-community/browser/source.git#tag=${_source_tag}"
+  "git+https://codeberg.org/librewolf/source.git#tag=${_source_tag}"
   default192x192.png
   librewolf.desktop
 )
 source_aarch64=("${_uploadpath_aarch64}" "${_uploadpath_sig_aarch64}")
 source_x86_64=("${_uploadpath_x86_64}" "${_uploadpath_sig_x86_64}")
-sha256sums=('1520a2f4e0f862b6d1df27bddf29f4b6ce499bb5538b331730050e019fdec970'
+sha256sums=('ceb2d213b6747cd82f4faea5e3c558b9b2a2eacf1300433bcfcad8c3a9b5c914'
             '959c94c68cab8d5a8cff185ddf4dca92e84c18dccc6dc7c8fe11c78549cdc2f1'
             '7d01d317b7db7416783febc18ee1237ade2ec86c1567e2c2dd628a94cbf2f25d')
-sha256sums_x86_64=('a51a521c090b42983cd2939f501bc606e8ebe1f0c3838c2996d548c3dc2b9411'
+sha256sums_x86_64=('15aff20d330a1a4c18aa98a3399fc2d5015eba7791746cc49c68fd8536412515'
                    'SKIP')
-sha256sums_aarch64=('053ab3040a21cbe91c5a8bb658a4ada00ca472a5750d87cb44d6e3505fd34c86'
+sha256sums_aarch64=('7b2c1f46319cdf66e410efabf2c49027d39b2eba90642058cb3c5e5dcb09821f'
                     'SKIP')
 
 package() {
