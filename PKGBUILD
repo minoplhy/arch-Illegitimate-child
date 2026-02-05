@@ -4,7 +4,7 @@ pkgname=librewolf-bin
 provides=(${pkgname//-bin/""})
 conflicts=(${pkgname//-bin/""})
 epoch=1
-pkgver=147.0.2_1
+pkgver=147.0.3_1
 _fixedfirefoxver="${pkgver%_*}" # Version of Firefox this LibreWolf version is based on, but the Firefox patch number is always included
 _librewolfver="${pkgver#*_}"
 _firefoxver="${_fixedfirefoxver%.0}" # Removes ".0" from the end. For "136.0.0" this will result in "136.0" but for "136.0.1" won't do anything.
@@ -76,12 +76,12 @@ source=(
 )
 source_aarch64=("${_uploadpath_aarch64}" "${_uploadpath_sig_aarch64}")
 source_x86_64=("${_uploadpath_x86_64}" "${_uploadpath_sig_x86_64}")
-sha256sums=('b05373a2f4ad3fa5413849d6117a7618baf768c6e732c7739069278ec7121acf'
+sha256sums=('04859c9d3ba2edc88c8d70fcf9eac91ff543c67407d52724fbb042e476afc0e4'
             '959c94c68cab8d5a8cff185ddf4dca92e84c18dccc6dc7c8fe11c78549cdc2f1'
             '7d01d317b7db7416783febc18ee1237ade2ec86c1567e2c2dd628a94cbf2f25d')
-sha256sums_x86_64=('e5678b61a66e8b15c416bccc5db17b1a45654a9b42d0d83a424082f1e7084971'
+sha256sums_x86_64=('a6ccdc0c7633aff8efa758c8a9476676447d23e4d76a43cf968ec67a6c122ee9'
                    'SKIP')
-sha256sums_aarch64=('c73f40a60a46f1bec48088ba9fc2fd9506cb9a8f21c6d1ad7e92e9a58bd13359'
+sha256sums_aarch64=('4a8284278121cb3dd079390552b5d9eac31c3439e7ae894cd02ea86069060b4f'
                     'SKIP')
 
 package() {
