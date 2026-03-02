@@ -47,7 +47,6 @@ depends=(
   expat
   fontconfig
   freetype2
-  gcc-libs
   gdk-pixbuf2
   glib2
   glibc
@@ -60,10 +59,12 @@ depends=(
   hyphen
   icu
   lcms2
+  libatomic
   libavif
   libdrm
   libegl
   libepoxy
+  libgcc
   libgcrypt
   libgl
   libgles
@@ -74,6 +75,7 @@ depends=(
   libseccomp
   libsecret
   libsoup
+  libstdc++
   libsystemd
   libtasn1
   libwebp
