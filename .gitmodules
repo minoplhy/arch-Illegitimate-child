@@ -1,0 +1,4 @@
+[submodule "arch-creamsoda"]
+	path = arch-creamsoda
+	url = https://github.com/minoplhy/arch-creamsoda
+	branch = master

@@ -1,0 +1,12 @@
+/packages/
+/logs/
+/cache/
+cache
+/chroot-ok/
+/chroot-*/
+/repo/*.pkg.tar.*
+repo
+/repo/*.pkg.tar.*.sig
+/repo/repo.lock
+/repo/status.json
+.gnupg
