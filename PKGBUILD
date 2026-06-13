@@ -416,25 +416,12 @@ prepare() {
       httpdirfs --cache --single-file-mode "$_iso" mnt/http
       echo "  - Creating loop device"
       _isoFile="mnt/http/$(echo "$_iso" | awk -F "/" '{print $NF}')"
-      _loopDev=$(udisksctl loop-setup -r -f "${_isoFile}" --no-user-interaction 2>&1 | grep -oE "'.*'" | sed -e "s/'//g")
-      # Wait for the loop device to be automatically mounted.
-      sleep 5
-      # Mount the loop device if not automatically mounted.
-      if ! grep -qs $_loopDev /proc/mounts; then
-        echo "  - Mounting loop device: $_loopDev"
-        udisksctl mount -t udf -b "$_loopDev" --no-user-interaction
-      fi
-      _mountpoint=$(findmnt -nfr -o target -S $_loopDev)
-      echo "  - Loop device mounted as ISO at: $_mountpoint"
-
+      7z e -aoa "${_isoFile}" sources/install.wim
+      
       echo "  - Extracting files from online Windows installation image"
-      7z e -aoa "${_mountpoint}/sources/install.wim" \
+      7z e -aoa "install.wim" \
         Windows/{Fonts/"*".{ttf,ttc},System32/Licenses/neutral/"*"/"*"/license.rtf}
 
-      echo "  - Unmounting loop device $_loopDev as ISO at: $_mountpoint"
-      udisksctl unmount -b "$_loopDev" --no-user-interaction
-      echo "  - Deleting loop device: $_loopDev"
-      udisksctl loop-delete -b "$_loopDev" --no-user-interaction
       echo "  - Unmounting HTTP file"
       fusermount3 -uz mnt/http
       rmdir -p mnt/http
