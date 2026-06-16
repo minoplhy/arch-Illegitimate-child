@@ -24,6 +24,7 @@ depends=(
   'qt6-multimedia'
   'xcb-util-cursor'
   'zxing-cpp'
+  'tesseract'
 )
 makedepends=(
   'extra-cmake-modules'
