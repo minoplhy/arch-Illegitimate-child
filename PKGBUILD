@@ -25,6 +25,7 @@ depends=(
   'xcb-util-cursor'
   'zxing-cpp'
   'tesseract'
+  'kquickimageeditor'
 )
 makedepends=(
   'extra-cmake-modules'
