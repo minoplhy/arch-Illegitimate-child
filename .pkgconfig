@@ -4,10 +4,10 @@
 # Tracking mode for the package update checks.
 # "source" - Track actual project releases (VCS updates using pkgver() or direct release tags check).
 # "aur"    - Track package wrapper updates published on the Arch User Repository (AUR).
-TRACKING_MODE="aur"
+TRACKING_MODE="source"
 
 # Upstream URL to override auto-detection for updates (optional).
-UPSTREAM_URL="spectacle-git"
+#UPSTREAM_URL="spectacle-git"
 
 # Conflict resolution strategy for automatic upgrades.
 # "abort"  - Fail the upgrade immediately on git merge conflict (default, safest).
