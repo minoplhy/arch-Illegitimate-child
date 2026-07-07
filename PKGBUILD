@@ -5,7 +5,7 @@
 
 _pkgname="spectacle"
 pkgname="$_pkgname-git"
-pkgver=6.7.2.r7.gaa01b3b
+pkgver=6.7.2.r9.gfcdf148
 pkgrel=1
 epoch=1
 pkgdesc='KDE screenshot capture utility'
