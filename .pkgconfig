@@ -14,3 +14,8 @@ UPSTREAM_URL="https://aur.archlinux.org/librewolf-bin.git"
 # "theirs" - Automatically choose the upstream (incoming) changes on conflict.
 # "ours"   - Automatically choose the local branch's changes on conflict.
 CONFLICT_STRATEGY="abort"
+
+# Enable auto rebase pull instead of merge when updating from source/AUR.
+# "true"  - Automatically rebase local changes onto upstream changes.
+# "false" - Use standard merge (default).
+AUTO_REBASE_PULL="false"
