@@ -18,5 +18,5 @@ CONFLICT_STRATEGY="abort"
 # Enable auto rebase pull instead of merge when updating from source/AUR.
 # "true"  - Automatically rebase local changes onto upstream changes.
 # "false" - Use standard merge (default).
-AUTO_REBASE_PULL="false"
+AUTO_REBASE_PULL="true"
 
