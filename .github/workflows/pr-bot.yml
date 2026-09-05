@@ -15,9 +15,9 @@ jobs:
       github.event.issue.pull_request != null &&
       contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association) &&
       (
-        trim(github.event.comment.body) == 'LGTM' ||
-        trim(github.event.comment.body) == 'lgtm' ||
-        startsWith(trim(github.event.comment.body), '/merge')
+        startsWith(github.event.comment.body, 'LGTM') ||
+        startsWith(github.event.comment.body, 'lgtm') ||
+        startsWith(github.event.comment.body, '/merge')
       )
     runs-on: ubuntu-latest
     steps:
@@ -66,8 +66,8 @@ jobs:
           git fetch origin "$HEAD_BRANCH:$HEAD_BRANCH"
 
           # Advance base branch to rebased upgrade head
-          if ! git push origin "$HEAD_BRANCH:$BASE_BRANCH" --force-with-lease; then
-            gh pr comment "$PR_NUMBER" --body "⚠️ Failed to advance \`$BASE_BRANCH\` to \`$HEAD_BRANCH\`. The base branch may have drifted."
+          if ! git push origin "$HEAD_BRANCH:$BASE_BRANCH" --force; then
+            gh pr comment "$PR_NUMBER" --body "⚠️ Failed to advance \`$BASE_BRANCH\` to \`$HEAD_BRANCH\`."
             exit 1
           fi
 
