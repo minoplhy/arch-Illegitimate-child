@@ -2,9 +2,15 @@ name: Scheduled Package Upgrade Checks
 
 on:
   schedule:
-    # Run daily at midnight
+    # Run daily at midnight UTC
     - cron: '0 0 * * *'
   workflow_dispatch:
+    inputs:
+      include_vcs:
+        description: 'Include VCS packages (-git) in this upgrade run'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -30,7 +36,7 @@ jobs:
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Setup Non-Root Builder User for Makepkg
         run: |
@@ -41,13 +47,17 @@ jobs:
       - name: Scan and Upgrade Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          INCLUDE_VCS: ${{ inputs.include_vcs }}
         run: |
-          cat << 'EOF' > run-upgrade.sh
+          cat << 'RUN_EOF' > run-upgrade.sh
           #!/bin/bash
+          set -o pipefail
+          
           echo "=== Configuring Git Credentials and Safe Directory ==="
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           cd "$GITHUB_WORKSPACE"
           
@@ -89,10 +99,23 @@ jobs:
           echo "$branches"
           echo "=================================================="
           
+          DAY_OF_WEEK=$(date +%u) # 1=Monday, 7=Sunday
+          
           for branch in $branches; do
             # Skip master, main and temporary upgrade branches
             if [ "$branch" = "master" ] || [ "$branch" = "main" ] || [[ "$branch" =~ ^upgrade/ ]]; then
               continue
+            fi
+            
+            # Exclude VCS packages from weekday cron runs unless requested
+            if [[ "$branch" =~ -git$ ]]; then
+              if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "$INCLUDE_VCS" != "true" ]; then
+                echo "Skipping VCS package '$branch' (manual dispatch without include_vcs)."
+                continue
+              elif [ "$EVENT_NAME" != "workflow_dispatch" ] && [ "$DAY_OF_WEEK" != "7" ]; then
+                echo "Skipping VCS package '$branch' on weekday cron (VCS runs on Sundays)."
+                continue
+              fi
             fi
             
             echo "================================================================================"
@@ -115,9 +138,20 @@ jobs:
               # Already up to date: successful
               echo "$branch|successful|$local_ver|$upstream_ver|Package is up-to-date" >> "$REPORT_FILE"
             elif [ $check_status -eq 2 ]; then
-              # Status 2 indicates OUT-OF-DATE. Attempt to run upgrade in PR mode.
-              echo "Package '$branch' is out-of-date. Opening PR..."
-              upgrade_output=$(./arch-creamsoda/manage.sh upgrade "$branch" --pr 2>&1)
+              # Status 2 indicates OUT-OF-DATE. Attempt to run upgrade in PR mode with rebase.
+              echo "Package '$branch' is out-of-date. Checking for existing superseded PRs..."
+              
+              existing_prs=$(gh pr list --base "$branch" --state open --json number,headRefName --jq '.[] | select(.headRefName | startswith("upgrade/")) | "\(.number)|\(.headRefName)"' 2>/dev/null || true)
+              while IFS='|' read -r old_pr_num old_pr_head; do
+                if [ -n "$old_pr_num" ] && [ -n "$old_pr_head" ]; then
+                  echo "Closing superseded PR #$old_pr_num ($old_pr_head)..."
+                  gh pr close "$old_pr_num" --comment "Superseded by newer upgrade check." 2>/dev/null || true
+                  git push origin --delete "$old_pr_head" 2>/dev/null || true
+                fi
+              done <<< "$existing_prs"
+              
+              echo "Running upgrade with --rebase..."
+              upgrade_output=$(./arch-creamsoda/manage.sh upgrade "$branch" --pr --rebase 2>&1)
               upgrade_status=$?
               echo "$upgrade_output"
               
@@ -143,13 +177,13 @@ jobs:
             fi
             echo ""
           done
-          EOF
+          RUN_EOF
           
           chmod +x run-upgrade.sh
           chown builder:builder run-upgrade.sh
           
           # Run the script as the builder user
-          sudo -u builder -i sh -c "export GITHUB_WORKSPACE='$GITHUB_WORKSPACE' GITHUB_TOKEN='$GITHUB_TOKEN'; /bin/bash '$GITHUB_WORKSPACE/run-upgrade.sh'"
+          sudo -u builder -i sh -c "export GITHUB_WORKSPACE='$GITHUB_WORKSPACE' GITHUB_TOKEN='$GITHUB_TOKEN' EVENT_NAME='$EVENT_NAME' INCLUDE_VCS='$INCLUDE_VCS'; /bin/bash '$GITHUB_WORKSPACE/run-upgrade.sh'"
           
           # Process results and write to Step Summary
           REPORT_FILE="$GITHUB_WORKSPACE/upgrade_results.txt"
@@ -189,5 +223,3 @@ jobs:
             echo "### ⚠️ Package Upgrade Report Error" >> "$GITHUB_STEP_SUMMARY"
             echo "No upgrade results file found." >> "$GITHUB_STEP_SUMMARY"
           fi
-
-
