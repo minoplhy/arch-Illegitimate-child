@@ -104,7 +104,7 @@ for pkg in "${TARGET_PKGS[@]}"; do
   # 6. Force-push to origin if requested
   if [ "$PUSH" = "true" ]; then
     echo "Force-pushing ${pkg} to origin..."
-    git -C "$target_dir" push origin "$pkg" --force-with-lease
+    git -C "$target_dir" push origin "$pkg" --force
   else
     echo "Local reset complete. Run with PUSH=true to push to origin."
   fi
